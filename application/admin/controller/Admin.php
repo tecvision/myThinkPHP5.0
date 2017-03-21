@@ -8,13 +8,18 @@
  */
 namespace app\admin\controller;
 
-use think\Config;
 
-class Admin
+use think\Controller;
+use think\Session;
+
+
+class Admin extends Controller
 {
-    public function index(){
-        echo Config::get('value');
+    function _initialize(){
+        if( !Session::has('userinfo', 'admin') ) {
+            $this->error('请先登录！', url('admin/Login/index'));
+        }
+        $userRow = Session::get('userinfo', 'admin');
     }
-
 
 }
